@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+        <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS from          https://materializecss.com       -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  </head>
+  <body>
+    
+    <h1>Hello!</h1>
+    <h4>Choose your action</h4>
+    
+<div>
+    <a href='<?= ScriptApp.getService().getUrl() ?>?v=page_1'id='btn1' style="height:50px;width:300px" class="waves-effect waves-light btn-small blue darken-1 input-field col s10"><i class="material-icons left">chevron_right</i>create New event</a>
+</div>
+<div>
+    <button id='btn2' style="height:50px;width:300px" class="waves-effect waves-light btn-small blue darken-1 input-field col s10"><i class="material-icons left">chevron_right</i>View events in calendar</button>
+</div>    
+<div>
+    <button id='btn3' style="height:50px;width:300px" class="waves-effect waves-light btn-small blue darken-1 input-field col s10"><i class="material-icons left">chevron_right</i>View events in spreadsheet</button>
+</div>
+<div>
+    <a href='<?= ScriptApp.getService().getUrl() ?>?v=page_2'id='btn4' style="height:50px;width:300px" class="waves-effect waves-light btn-small blue darken-1 input-field col s10"><i class="material-icons left">chevron_right</i>Pre-registration for the event</a>
+</div>
+  
+      <!-- Compiled and minified JavaScript from          https://materializecss.com  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script>
+    
+    document.getElementById('btn3').addEventListener('click',openG_sheet);      
+      function openG_sheet() {        
+        window.open("https://docs.google.com/spreadsheets/d/1uvpi8N92RaCmbMFvbsABk3L4xKtkVUBwbRxrsmIY64o/edit#gid=0");
+      }
+      
+    document.getElementById('btn2').addEventListener('click',openCalendar);      
+      function openCalendar() {        
+        window.open("https://calendar.google.com/calendar/embed?src=9pqgeoe0s2n22jlftlkt2fa73g%40group.calendar.google.com&ctz=Europe%2FMinsk");
+        //window.open("https://calendar.google.com/calendar/u/0?cid=OXBxZ2VvZTBzMm4yMmpsZnRsa3QyZmE3M2dAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ");
+        
+      }           
+    </script>
+    
+ 
+  </body>
+  
+  
+</html>
