@@ -51,13 +51,13 @@
        
        <div class="input-field col s4">
           <input id="notes" type="text" class="validate">
-          <label for="notes">Notes</label>
+          <label for="notes">Red boss</label>
        </div>
     </div> <!--CLOSE ROW-->
     
     
     <div class="row">          
-      <button id='btn0' class="waves-effect waves-light btn"><i class="material-icons left">chevron_right</i>Submit</button>
+      <button id='btn_submit' class="waves-effect waves-light btn"><i class="material-icons left">chevron_right</i>Submit</button>
     </div> <!--CLOSE ROW-->
     
   </div> <!--CLOSE CONTAINER--> 
@@ -66,23 +66,41 @@
     
     <script>
     
-          document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
 
-      
-        var elems = document.querySelectorAll('select');
-        M.FormSelect.init(elems);
-        
         var startDpicker = document.getElementById('sdp');
         M.Datepicker.init(startDpicker);
         var endDpicker = document.getElementById('edp');
         M.Datepicker.init(endDpicker);
-        
-        document.addEventListener('DOMContentLoaded', function() {
-        var select = document.querySelectorAll('select');
-        M.FormSelect.init(select);
+
     });
+    
+    document.getElementById('btn_submit').addEventListener('click',doSubmit);
+    
+
+    function doSubmit() {
+
+        var eventInfo = {};
         
-    });
+        eventInfo.title = document.getElementById('evName').value;
+        eventInfo.location = document.getElementById('location').value;
+        eventInfo.startDate = document.getElementById('sdp').value;
+        eventInfo.endDate = document.getElementById('edp').value;
+        eventInfo.numberOfStaff = document.getElementById('numPers').value;
+        eventInfo.notes = document.getElementById('notes').value;
+        
+        google.script.run.createEvent(eventInfo);
+        
+        document.getElementById('evName').value = '';
+        document.getElementById('location').value = '';
+        document.getElementById('sdp').value = '';
+        document.getElementById('edp').value = '';
+        document.getElementById('numPers').value = '';
+        document.getElementById('notes').value = '';
+      
+      }
+
+        
     
     </script>
 

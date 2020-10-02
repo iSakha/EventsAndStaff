@@ -5,10 +5,13 @@ function write_to_DB(_data, _id) {
   
   var ss = SpreadsheetApp.openByUrl(url);
   var sh = ss.getSheetByName('Events');
+  
+  var staffRegistered = 0;
+  var staffConfirmed = 0;
 
   _data.endDate.setDate(_data.endDate.getDate() - 1);
   
-  sh.appendRow([_id, _data.title, _data.location, _data.startDate, _data.endDate, _data.numberOfStaff, _data.notes]);
+  sh.appendRow([_id, _data.title, _data.location, _data.startDate, _data.endDate, _data.numberOfStaff, _data.notes, staffRegistered, staffConfirmed]);
 
 }
 

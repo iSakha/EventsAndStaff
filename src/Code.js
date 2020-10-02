@@ -40,3 +40,17 @@ function loadForm(_page) {
 function include(_filename) {
   return HtmlService.createHtmlOutputFromFile(_filename).getContent();
 }
+
+function getEventID(_index) {
+
+  var ss = SpreadsheetApp.openByUrl(urlG_sheet);
+  var sh = ss.getSheetByName('Events');
+  var event_id = sh.getRange(_index + 1, 1).getValue();
+  
+  var staffNeeded = sh.getRange(_index + 1, 6).getValue();
+
+  Logger.log(staffNeeded);
+  
+  return(staffNeeded);
+  
+}

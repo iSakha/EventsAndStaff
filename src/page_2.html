@@ -54,7 +54,7 @@
         </div> 
          
          <div class="input-field col s2">
-          <button id='newPers' class="waves-effect waves-light btn"><i class="material-icons left">chevron_right</i>ADD </button>
+          <button id='newPers' style='width:200px' class="waves-effect waves-light btn">ADD new person </button>
         </div> 
          
         
@@ -67,23 +67,43 @@
 
     <script>
     
-          document.addEventListener('DOMContentLoaded', function() {
-
-      
-        var elems = document.querySelectorAll('select');
-        M.FormSelect.init(elems);
+        document.addEventListener('DOMContentLoaded', function() {
         
-//        var startDpicker = document.getElementById('sdp');
-//        M.Datepicker.init(startDpicker);
-//        var endDpicker = document.getElementById('edp');
-//        M.Datepicker.init(endDpicker);
+        
+      
+        var selectEvent = document.getElementById('event');
+        M.FormSelect.init(selectEvent);
+        var selectStaff = document.getElementById('staff');
+        M.FormSelect.init(selectStaff);
         
         document.addEventListener('DOMContentLoaded', function() {
-        var select = document.querySelectorAll('select');
-        M.FormSelect.init(select);
-    });
+        M.FormSelect.init(selectEvent);
+        M.FormSelect.init(selectStaff);
+      });
+      
+      
         
     });
+    
+      var selectEvent = document.getElementById('event');
+      selectEvent.addEventListener('change',eventSelected);
+      
+      function eventSelected() {
+      
+        var selectEvent = document.getElementById('event');
+        selectEvent.addEventListener('change',eventSelected);
+        
+        var index = selectEvent.selectedIndex;
+        google.script.run.withSuccessHandler(withSuccess).getEventID(index);
+        
+      }
+      
+      function withSuccess(returnStaff) {
+      var txtNumStaff = document.getElementById('numStaff');
+        txtNumStaff.focus();
+        txtNumStaff.value = returnStaff;
+        console.log(returnStaff);
+      }
     
     </script>
     
