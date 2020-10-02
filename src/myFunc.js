@@ -33,3 +33,13 @@ _event.endDate.setDate(_event.endDate.getDate() + 1);
   write_to_DB(_event, eventID);
   
 }
+
+function addPerson(_pers) {
+
+  var url = 'https://docs.google.com/spreadsheets/d/1uvpi8N92RaCmbMFvbsABk3L4xKtkVUBwbRxrsmIY64o/edit#gid=0';
+  var ss = SpreadsheetApp.openByUrl(url);
+  var sh = ss.getSheetByName('Staff');
+
+  sh.appendRow([_pers.id, _pers.name]);
+  
+}

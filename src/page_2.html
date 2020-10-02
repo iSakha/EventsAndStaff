@@ -76,9 +76,7 @@
     <script>
     
         document.addEventListener('DOMContentLoaded', function() {
-        
-        
-      
+             
         var selectEvent = document.getElementById('event');
         M.FormSelect.init(selectEvent);
         var selectStaff = document.getElementById('staff');
@@ -87,9 +85,7 @@
         document.addEventListener('DOMContentLoaded', function() {
         M.FormSelect.init(selectEvent);
         M.FormSelect.init(selectStaff);
-      });
-      
-      
+      });      
         
     });
     
@@ -112,7 +108,7 @@
       var txtStaffRegistered = document.getElementById('regStaff'); 
       var txtStaffConfirmed = document.getElementById('confirmStaff');
       var staff = returnStaff
-      console.log(staff);
+      
       
         txtNumStaff.focus();
         txtNumStaff.value = staff[0];
@@ -122,7 +118,29 @@
         txtStaffConfirmed.value = staff[2];
         
       }
-    
+      
+
+      document.getElementById('newPers').addEventListener('click',createStaff_ID);
+      
+      function createStaff_ID() {
+      
+      var staff_ID = '';
+      var myArray = ['0','1','2','3','4','5','6','7','8','9','q','w','e','r','t','y','u','i','o','p',
+      'a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'];
+      var txtNewPers = document.getElementById('newPrs');
+      for (var i = 0; i < 12; i++) {
+      var index = Math.floor((Math.random() * 35));
+          staff_ID = staff_ID + myArray[index];
+        }
+        var staffName = txtNewPers.value;
+        
+        var pers = {};
+        pers.id = staff_ID;
+        pers.name = staffName;
+        google.script.run.addPerson(pers);
+        
+      }
+
     </script>
     
   </body>
