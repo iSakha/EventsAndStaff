@@ -27,15 +27,20 @@
           </select> 
          </div>
          
-         <div class="input-field col s2">
+         <div class="input-field col s1">
           <input id="numStaff" type="text" class="validate">
           <label for="numStaff">Staff needed</label>
          </div> 
-         
-         <div class="input-field col s2">
+                  
+         <div class="input-field col s1">
           <input id="regStaff" type="text" class="validate">
-          <label for="regStaff">Staff registered</label>
+          <label for="regStaff">Registered</label>
          </div> 
+         
+         <div class="input-field col s1">
+          <input id="confirmStaff" type="text" class="validate">
+          <label for="confirmStaff">Confirmed</label>
+         </div>
         
       </div> <!--CLOSE ROW-->
       
@@ -56,9 +61,12 @@
          <div class="input-field col s2">
           <button id='newPers' style='width:200px' class="waves-effect waves-light btn">ADD new person </button>
         </div> 
-         
-        
+                 
       </div> <!--CLOSE ROW-->
+      
+      <div class="row">          
+      <button id='btn_submit' class="waves-effect waves-light btn"><i class="material-icons left">chevron_right</i>Submit</button>
+    </div> <!--CLOSE ROW-->
       
     </div> <!--CLOSE CONTAINER-->
     
@@ -99,10 +107,20 @@
       }
       
       function withSuccess(returnStaff) {
-      var txtNumStaff = document.getElementById('numStaff');
+      
+      var txtNumStaff = document.getElementById('numStaff'); 
+      var txtStaffRegistered = document.getElementById('regStaff'); 
+      var txtStaffConfirmed = document.getElementById('confirmStaff');
+      var staff = returnStaff
+      console.log(staff);
+      
         txtNumStaff.focus();
-        txtNumStaff.value = returnStaff;
-        console.log(returnStaff);
+        txtNumStaff.value = staff[0];
+        txtStaffRegistered.focus();
+        txtStaffRegistered.value = staff[1];
+        txtStaffConfirmed.focus();
+        txtStaffConfirmed.value = staff[2];
+        
       }
     
     </script>

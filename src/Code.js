@@ -48,9 +48,13 @@ function getEventID(_index) {
   var event_id = sh.getRange(_index + 1, 1).getValue();
   
   var staffNeeded = sh.getRange(_index + 1, 6).getValue();
-
-  Logger.log(staffNeeded);
+  var staffRegistered = sh.getRange(_index + 1, 8).getValue();
+  var staffConfirmed = sh.getRange(_index + 1, 9).getValue();
   
-  return(staffNeeded);
+  var staff = [staffNeeded, staffRegistered, staffConfirmed];
+
+  Logger.log(staff);
+  
+  return(staff);
   
 }
