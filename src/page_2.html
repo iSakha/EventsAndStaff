@@ -76,27 +76,21 @@
     <script>
     
     var selEventIndex = -1;
+    var selectEvent = document.getElementById('event');
+    var selectStaff = document.getElementById('staff');
     
         document.addEventListener('DOMContentLoaded', function() {
              
-        var selectEvent = document.getElementById('event');
         M.FormSelect.init(selectEvent);
-        var selectStaff = document.getElementById('staff');
-        M.FormSelect.init(selectStaff);
-        
-        document.addEventListener('DOMContentLoaded', function() {
-        M.FormSelect.init(selectEvent);
-        M.FormSelect.init(selectStaff);
-      });      
+        M.FormSelect.init(selectStaff);    
         
     });
     
-      var selectEvent = document.getElementById('event');
+
       selectEvent.addEventListener('change',eventSelected);
       
-      function eventSelected() {
-      
-        var selectEvent = document.getElementById('event');
+      function eventSelected() {      
+
         selectEvent.addEventListener('change',eventSelected);
         
         selEventIndex = selectEvent.selectedIndex;
@@ -121,7 +115,8 @@
         
       }
       
-
+  //==================================   ADD NEW PERSON button   ===============================================================
+  
       document.getElementById('newPers').addEventListener('click',createStaff_ID);
       
       function createStaff_ID() {
@@ -131,7 +126,7 @@
         'a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'];
         
         var txtNewPers = document.getElementById('newPrs');
-        var selStaff = document.getElementById('staff');
+        //var selStaff = document.getElementById('staff');
         
         for (var i = 0; i < 12; i++) {
             var index = Math.floor((Math.random() * 35));
@@ -150,8 +145,8 @@
           txtNewPers.value = '';
           var option = document.createElement("option");
           option.text = staffName;
-          selStaff.add(option);
-          M.FormSelect.init(selStaff);
+          selectStaff.add(option);
+          M.FormSelect.init(selectStaff);
           google.script.run.createStaffSpreadsheet(staff_ID);
           
         }else{alert('You need to enter name!');}
@@ -159,14 +154,18 @@
 
       }
       
-      
+  //==================================   SUBMIT button   ===============================================================
+  
       document.getElementById('btn_submit').addEventListener('click',addPersonToEvent);
       
       function addPersonToEvent() {
-        var selectStaff = document.getElementById('staff');
+
         var index = selectStaff.selectedIndex;
                
         google.script.run.addPersonToEventSheet(selEventIndex, index);
+        
+        M.FormSelect.init(selectEvent);
+        M.FormSelect.init(selectStaff);
         
       }
       
