@@ -91,7 +91,7 @@
       
       function eventSelected() {      
 
-        selectEvent.addEventListener('change',eventSelected);
+//        selectEvent.addEventListener('change',eventSelected);
         
         selEventIndex = selectEvent.selectedIndex;
         google.script.run.withSuccessHandler(withSuccess).getEventID(selEventIndex);
@@ -161,12 +161,18 @@
       function addPersonToEvent() {
 
         var index = selectStaff.selectedIndex;
+        
+        var regStaff = document.getElementById('regStaff').value;
+        regStaff = parseInt(regStaff);
+        regStaff++;
+        document.getElementById('regStaff').value = regStaff;
                
         google.script.run.addPersonToEventSheet(selEventIndex, index);
         
-        M.FormSelect.init(selectEvent);
-        M.FormSelect.init(selectStaff);
         
+        M.FormSelect.init(selectEvent).selectedIndex = 0;
+        
+        console.dir(selectStaff);
       }
       
 

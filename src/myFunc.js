@@ -6,7 +6,7 @@ var ss_dtb = SpreadsheetApp.openByUrl(url_dtb);
 var shEvent = ss_dtb.getSheetByName('Events');
 var shStaff = ss_dtb.getSheetByName('Staff');
 
-//========================================   function write_to_DB   =================================================================
+//========================================   function write Event to_DB   =================================================================
 function write_to_DB(_data, _id) {
   
   var staffRegistered = 0;
@@ -15,10 +15,18 @@ function write_to_DB(_data, _id) {
   _data.endDate.setDate(_data.endDate.getDate() - 1);
   
   shEvent.appendRow([_id, _data.title, _data.location, _data.startDate, _data.endDate, _data.numberOfStaff, _data.notes, staffRegistered, staffConfirmed]);
-  var color_r = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getRed();
-  var color_g = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getGreen();
-  var color_b = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getBlue();
-  Logger.log('red: ' + color_r + ' green: ' + color_g + ' blue: ' + color_b);
+  
+//  var color_r = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getRed();
+//  var color_g = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getGreen();
+//  var color_b = shEvent.getRange('a1').getBackgroundObject().asRgbColor().getBlue();
+//  Logger.log('red: ' + color_r + ' green: ' + color_g + ' blue: ' + color_b);
+
+  var monthIndex = _data.startDate.getMonth();
+//  Logger.log(month);
+  var sheets = ss_dtb.getSheets();
+  var shMonth = sheets[monthIndex + 2];
+  shMonth.appendRow([_id, _data.title, _data.location, _data.startDate, _data.endDate, _data.numberOfStaff, _data.notes, staffRegistered, staffConfirmed]);
+//  Logger.log(shMonth.getName());
 }
 
 //========================================   function createEvent   =================================================================
@@ -105,9 +113,31 @@ function addPersonToEventSheet(_eventIndex, _staffIndex) {
   
   sh.appendRow([record.staffID, record.staffName]);
   
+  var numReg = shEvent.getRange(_eventIndex + 1, 8).getValue();
+  //numReg = parsInt(numReg);
+  numReg++;
+  Logger.log(numReg);
+  shEvent.getRange(_eventIndex + 1, 8).setValue(numReg);
   
-  Logger.log(idStaff);
+//  Logger.log(idStaff);
   
 }
   
-  
+function getListMonthEvents(_monthIndex) {
+//  _monthIndex = 0;
+  var sheets = ss_dtb.getSheets();
+  var shMonth = sheets[_monthIndex + 1];
+     
+   var eventList = [];
+   
+   var lastRowNum = shMonth.getLastRow(); 
+   
+   
+   for (var i = 2;i <= lastRowNum;i++) {
+     var event = shMonth.getRange(i, 2).getValue();
+     eventList.push(event);
+   }
+   Logger.log(eventList);
+  return(eventList);
+ 
+}

@@ -2,9 +2,120 @@
 <html>
   <head>
     <base target="_top">
+                    <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS from          https://materializecss.com       -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   </head>
   <body>
+    <h1>Event details</h1>
     
+    <div>
+      <a href='<?= ScriptApp.getService().getUrl() ?>?v=page_0'id='btn' style="height:50px;width:300px" class="waves-effect waves-light btn-small input-field col s10"><i class="material-icons left">chevron_left</i>back to main page</a>
+    </div> 
+    
+    
+      
+  
+    <div class="container">
+      <div class="row">
+        <div class="input-field col s1">
+         <select id='year'>
+            <option disabled selected>Year</option>
+              <option>2020</option>
+              <option>2021</option>
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+          </select> 
+        </div>
+        
+        <div class="input-field col s1">
+         <select id='month'>
+            <option disabled selected>Month</option>
+              <option>Jan</option>
+              <option>Feb</option>
+              <option>Mar</option>
+              <option>Apr</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>Aug</option>
+              <option>Sep</option>
+              <option>Oct</option>
+              <option>Nov</option>
+              <option>Dec</option>
+          </select> 
+        </div>
+        
+        <div class="input-field col s4">
+         <select id='event'>
+            <option disabled selected>Select event</option>             
+          </select> 
+        </div>
+        
+      </div> <!--CLOSE ROW-->
+    </div> <!--CLOSE CONTAINER--> 
+    
+                  <!-- Compiled and minified JavaScript from          https://materializecss.com  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script>
+    
+    
+      document.addEventListener('DOMContentLoaded', function() {
+      
+        var selectYear = document.getElementById('year');
+        var selectMonth = document.getElementById('month');
+        var selectEvent = document.getElementById('event');
+        M.FormSelect.init(selectYear);
+        M.FormSelect.init(selectMonth);
+        M.FormSelect.init(selectEvent);
+        
+    });
+    
+    
+    
+    document.getElementById('month').addEventListener('change',monthEventSelected);
+    
+    function monthEventSelected() {
+      var selectInstance = document.getElementById('month');
+      var monthIndex = selectInstance.selectedIndex;
+      
+      google.script.run.withSuccessHandler(withEventSuccess).getListMonthEvents(monthIndex);
+      
+      function withEventSuccess(returnEventList) {
+        console.log(returnEventList);
+        
+        var selectEvent = document.getElementById('event'); 
+        //var eventInstance = M.FormSelect.init(selectEvent);
+        
+        for () { 
+        selectEvent.remove();
+        }
+        var option = document.createElement("option");
+        option.text = 'Select event';
+        
+        
+        
+        for (var i = 0;i < returnEventList.length; i++) {
+          var option = document.createElement("option");
+          option.text = returnEventList[i].toString();
+          console.log(option.text);
+          selectEvent.add(option);
+          
+        }
+        
+        M.FormSelect.init(selectEvent);  
+
+      }
+      
+    }
+    
+    </script>
   </body>
 </html>
 

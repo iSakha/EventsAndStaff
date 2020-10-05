@@ -2,6 +2,7 @@ var url = 'https://docs.google.com/spreadsheets/d/1uvpi8N92RaCmbMFvbsABk3L4xKtkV
 var urlG_sheet = 'https://docs.google.com/spreadsheets/d/1uvpi8N92RaCmbMFvbsABk3L4xKtkVUBwbRxrsmIY64o/edit#gid=0';
 var tmp;
 
+//========================================   function doGet   =================================================================
 function doGet(e) {
 
   //Logger.log(e.parameter);
@@ -12,10 +13,10 @@ function doGet(e) {
  }else {
  return loadForm(v);
  }
-
   
 }
 
+//========================================   function loadForm   =================================================================
 function loadForm(_page) {
 
   var ss = SpreadsheetApp.openByUrl(url);
@@ -37,10 +38,12 @@ function loadForm(_page) {
 }
 
 
-function include(_filename) {
-  return HtmlService.createHtmlOutputFromFile(_filename).getContent();
-}
+//function include(_filename) {
+//  return HtmlService.createHtmlOutputFromFile(_filename).getContent();
+//}
 
+
+//========================================   function getEventID   =================================================================
 function getEventID(_index) {
 
   var ss = SpreadsheetApp.openByUrl(urlG_sheet);
@@ -58,3 +61,4 @@ function getEventID(_index) {
   return(staff);
   
 }
+
