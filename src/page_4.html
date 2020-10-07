@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    
+  </head>
+  
+  <body>
+  
+     <h1>Event details</h1>
+    
+    <div>
+      <a href='<?= ScriptApp.getService().getUrl() ?>?v=page_0'id='btn'>back to main page</a>
+    </div> 
+
+
+
+          <select id="year">
+            <option disabled selected>Year</option>
+            
+              <option>2020</option>
+              <option>2021</option>
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+              
+          </select>
+
+        
+
+         <select id="month">
+            <option disabled selected>Month</option>
+              <option>Jan</option>
+              <option>Feb</option>
+              <option>Mar</option>
+              <option>Apr</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>Aug</option>
+              <option>Sep</option>
+              <option>Oct</option>
+              <option>Nov</option>
+              <option>Dec</option>
+          </select> 
+       
+        
+       
+         <select id="event">
+            <option>Select event</option>             
+          </select> 
+       
+        
+
+    
+
+  
+    
+    <script>
+    document.getElementById('month').addEventListener('change',monthEventSelected);
+    
+    
+    
+    function monthEventSelected() {
+    
+      var selMonth = document.getElementById('month');
+      var monthIndex = selMonth.selectedIndex;
+      
+      google.script.run.withSuccessHandler(withEventSuccess).getListMonthEvents(monthIndex);
+            
+    }
+    
+    function withEventSuccess(returnEventList) {
+
+//        console.log(returnEventList);
+        
+        var selectEvent = document.getElementById('event'); 
+        
+//        for (var i = 0;i < selectEvent.options.length; i++) {
+////          if (selectEvent.options.length > 1) {
+//          
+//          console.log(selectEvent.options[i].text);
+// 
+//          selectEvent.remove(i);
+//
+////          }
+//        }
+        
+        for (var i = selectEvent.options.length - 1; i>=0; i--) {
+          selectEvent.remove(i);
+        }
+
+ 
+                       
+        for (var i = 0;i < returnEventList.length; i++) {
+        
+          var option = document.createElement("option");
+          option.text = returnEventList[i].toString();
+//          console.log(option.text);
+          selectEvent.add(option);
+          
+        }
+        
+  
+
+      }
+    
+    </script>
+  </body>
+  
+</html>
+
+
+ 
