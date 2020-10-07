@@ -122,7 +122,8 @@ function addPersonToEventSheet(_eventIndex, _staffIndex) {
 //  Logger.log(idStaff);
   
 }
-  
+ 
+//========================================   function getListMonthEvents   ================================================================= 
 function getListMonthEvents(_monthIndex) {
 //  _monthIndex = 0;
   var sheets = ss_dtb.getSheets();
@@ -140,4 +141,22 @@ function getListMonthEvents(_monthIndex) {
    Logger.log(eventList);
   return(eventList);
  
+}
+//========================================   function getListMonthEvents   =================================================================
+function getNumStaff(_monthIndex, _eventIndex) {
+
+  var sheets = ss_dtb.getSheets();
+  var shMonth = sheets[_monthIndex + 1];
+  
+  var eventStaff = [];
+  
+  eventStaff[0] = shMonth.getRange(_eventIndex + 1, 6).getValue();
+  eventStaff[1] = shMonth.getRange(_eventIndex + 1, 8).getValue();
+  eventStaff[2] = shMonth.getRange(_eventIndex + 1, 9).getValue();
+  
+  var name = shMonth.getRange(_eventIndex + 1, 2).getValue();
+  Logger.log(name);
+  
+  Logger.log(eventStaff);
+  return(eventStaff);
 }

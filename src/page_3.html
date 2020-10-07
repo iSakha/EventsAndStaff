@@ -58,6 +58,51 @@
         </div>
         
       </div> <!--CLOSE ROW-->
+      
+       <div class="row">
+         
+         <div class="input-field col s2">
+          <input id="numStaff" type="text" class="validate">
+          <label for="numStaff">Staff needed</label>
+         </div> 
+                  
+         <div class="input-field col s2">
+          <input id="regStaff" type="text" class="validate">
+          <label for="regStaff">Staff registered</label>
+         </div> 
+         
+         <div class="input-field col s2">
+          <input id="confirmStaff" type="text" class="validate">
+          <label for="confirmStaff">Staff confirmed</label>
+         </div>
+        
+      </div> <!--CLOSE ROW--> 
+      
+      <div class="row">
+        <div class="input-field col s6">
+              <table id="staff_tbl">
+          <thead>
+            <tr>
+                <th>Number</th>
+                <th>Staff Name</th>
+                <th>Confirmed</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>No name</td>
+              <td><label><input type="checkbox"/><span></span> </label></td>     
+            </tbody>
+          </table>
+        </div>
+      </div> <!--CLOSE ROW-->
+      
+      <div class="row">          
+        <button id='btn_submit' class="waves-effect waves-light btn"><i class="material-icons left">chevron_right</i>Submit</button>
+      </div> <!--CLOSE ROW-->
+      
     </div> <!--CLOSE CONTAINER--> 
     
                   <!-- Compiled and minified JavaScript from          https://materializecss.com  -->
@@ -112,10 +157,116 @@
           M.FormSelect.init(selectEvent);
    }
         
-
-      
-      
+    document.getElementById('event').addEventListener('change',eventSelected);
     
+    function eventSelected() {
+      var selMonth = document.getElementById('month');
+      var monthIndex = selMonth.selectedIndex;
+      
+      var selEvent = document.getElementById('event');
+      var eventIndex = selEvent.selectedIndex;
+      
+      console.log(eventIndex);
+      
+      google.script.run.withSuccessHandler(withSuccessEvent).getNumStaff(monthIndex, eventIndex);
+    }
+          
+    function withSuccessEvent(returnStaff) {
+      var txtStaffNeed = document.getElementById('numStaff');
+      var txtStaffReg = document.getElementById('regStaff');
+      var txtStaffConf = document.getElementById('confirmStaff');
+      
+      console.log(returnStaff);
+            
+      txtStaffNeed.focus();
+      txtStaffNeed.value = returnStaff[0];
+      txtStaffReg.focus();
+      txtStaffReg.value = returnStaff[1];
+      txtStaffConf.focus();
+      txtStaffConf.value = returnStaff[2];
+    }
+    
+    document.getElementById('btn_submit').addEventListener('click',createTable);
+    
+    function createTable() {
+      var tbl = document.getElementById('staff_tbl');
+      var row = document.createElement("tr");
+      
+      var myRow = tbl.rows[1];
+      
+      var cloneRow = myRow.cloneNode(true);
+//      console.log(numRows);
+      tbl.appendChild(cloneRow);
+      
+      // create element <td> and text node 
+      //Make text node the contents of <td> element
+      // put <td> at end of the table row
+      var cell = document.createElement("td");
+      var cellText = document.createTextNode("We");
+
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+      
+      var cell = document.createElement("td");
+      var cellText = document.createTextNode("go");
+
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+      
+      var cell = document.createElement("td");
+      var x = document.createElement("INPUT");
+      x.setAttribute("type", "checkbox");
+
+      cell.appendChild(x);
+      row.appendChild(cell);
+
+
+    //row added to end of table body
+    tbl.appendChild(row);
+    
+//   // append the <tbody> inside the <table>
+//    tbl.appendChild(tblBody);
+//   // put <table> in the <body>
+//    body.appendChild(tbl);
+    
+    
+//=============================================================================================
+////body reference 
+//  var body = document.getElementsByTagName("body")[0];
+//
+//  // create elements <table> and a <tbody>
+//  var tbl = document.createElement("table");
+//  var tblBody = document.createElement("tbody");
+//
+//  // cells creation
+//  for (var j = 0; j <= 2; j++) {
+//    // table row creation
+//    var row = document.createElement("tr");
+//
+//    for (var i = 0; i <= 2; i++) {
+//      // create element <td> and text node 
+//      //Make text node the contents of <td> element
+//      // put <td> at end of the table row
+//      var cell = document.createElement("td");
+//      var cellText = document.createTextNode("cell is row " + j + ", column " + i);
+//
+//      cell.appendChild(cellText);
+//      row.appendChild(cell);
+//    }
+//
+//    //row added to end of table body
+//    tblBody.appendChild(row);
+//  }
+//
+//  // append the <tbody> inside the <table>
+//  tbl.appendChild(tblBody);
+//  // put <table> in the <body>
+//  body.appendChild(tbl);
+//  // tbl border attribute to 
+//  tbl.setAttribute("border", "2");
+      
+      console.log('Create table!');
+    }
     
     </script>
   </body>
