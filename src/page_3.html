@@ -82,38 +82,40 @@
     document.getElementById('month').addEventListener('change',monthEventSelected);
     
     function monthEventSelected() {
-      var selectInstance = document.getElementById('month');
-      var monthIndex = selectInstance.selectedIndex;
+    
+      var selMonth = document.getElementById('month');
+      var monthIndex = selMonth.selectedIndex;
       
       google.script.run.withSuccessHandler(withEventSuccess).getListMonthEvents(monthIndex);
       
+ }
+ 
       function withEventSuccess(returnEventList) {
         console.log(returnEventList);
         
         var selectEvent = document.getElementById('event'); 
-        //var eventInstance = M.FormSelect.init(selectEvent);
         
-        for () { 
-        selectEvent.remove();
+        for (var i = selectEvent.options.length - 1; i>=0; i--) {
+          if(selectEvent.options.length > 1) {
+            selectEvent.remove(i);
+          }
         }
-        var option = document.createElement("option");
-        option.text = 'Select event';
         
+          for (var i = 0;i < returnEventList.length; i++) {
         
-        
-        for (var i = 0;i < returnEventList.length; i++) {
-          var option = document.createElement("option");
-          option.text = returnEventList[i].toString();
-          console.log(option.text);
-          selectEvent.add(option);
+            var option = document.createElement("option");
+            option.text = returnEventList[i].toString();
+  //          console.log(option.text);
+            selectEvent.add(option);
           
         }
+          M.FormSelect.init(selectEvent);
+   }
         
-        M.FormSelect.init(selectEvent);  
 
-      }
       
-    }
+      
+    
     
     </script>
   </body>
