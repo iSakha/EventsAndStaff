@@ -89,9 +89,8 @@
 
       selectEvent.addEventListener('change',eventSelected);
       
+   //==================================   function eventSelected   ===============================================================     
       function eventSelected() {      
-
-//        selectEvent.addEventListener('change',eventSelected);
         
         selEventIndex = selectEvent.selectedIndex;
         google.script.run.withSuccessHandler(withSuccess).getEventID(selEventIndex);

@@ -110,6 +110,7 @@
     
     <script>
     
+        var redBoss;
     
       document.addEventListener('DOMContentLoaded', function() {
       
@@ -156,6 +157,8 @@
         }
           M.FormSelect.init(selectEvent);
    }
+   
+//========================================   Event selection   =================================================================
         
     document.getElementById('event').addEventListener('change',eventSelected);
     
@@ -166,10 +169,11 @@
       var selEvent = document.getElementById('event');
       var eventIndex = selEvent.selectedIndex;
       
-      console.log(eventIndex);
+//      console.log(eventIndex);
       
-      google.script.run.withSuccessHandler(withSuccessEvent).getNumStaff(monthIndex, eventIndex);
+      google.script.run.withSuccessHandler(withSuccessEvent).getStaff(monthIndex, eventIndex);
     }
+//------------------------------------------------------------------------------------------------------------------------------  
           
     function withSuccessEvent(returnStaff) {
       var txtStaffNeed = document.getElementById('numStaff');
@@ -184,90 +188,62 @@
       txtStaffReg.value = returnStaff[1];
       txtStaffConf.focus();
       txtStaffConf.value = returnStaff[2];
-    }
-    
-    document.getElementById('btn_submit').addEventListener('click',createTable);
-    
-    function createTable() {
-      var tbl = document.getElementById('staff_tbl');
-      var row = document.createElement("tr");
       
+      redBoss = returnStaff[3];
+      clearPersTable();
+      var tbl = document.getElementById('staff_tbl');
+      var numRows = returnStaff[1];
       var myRow = tbl.rows[1];
       
-      var cloneRow = myRow.cloneNode(true);
-//      console.log(numRows);
-      tbl.appendChild(cloneRow);
-      
-      // create element <td> and text node 
-      //Make text node the contents of <td> element
-      // put <td> at end of the table row
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode("We");
-
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-      
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode("go");
-
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-      
-      var cell = document.createElement("td");
-      var x = document.createElement("INPUT");
-      x.setAttribute("type", "checkbox");
-
-      cell.appendChild(x);
-      row.appendChild(cell);
-
-
-    //row added to end of table body
-    tbl.appendChild(row);
+      for (var i = 0;i < numRows; i++) {
+        var cloneRow = myRow.cloneNode(true);
+        cloneRow.cells[0].innerHTML = i + 2;
+        cloneRow.cells[1].innerHTML = returnStaff[i + 4];
+        tbl.appendChild(cloneRow);
+        
+      }
+      myRow.cells[1].innerHTML  = redBoss;
+    }
+//------------------------------------------------------------------------------------------------------------------------------    
+    document.getElementById('btn_submit').addEventListener('click',fillTable);
     
-//   // append the <tbody> inside the <table>
-//    tbl.appendChild(tblBody);
-//   // put <table> in the <body>
-//    body.appendChild(tbl);
+//========================================   function fillTable   =================================================================    
+    function fillTable(_numRows) {
     
-    
-//=============================================================================================
-////body reference 
-//  var body = document.getElementsByTagName("body")[0];
-//
-//  // create elements <table> and a <tbody>
-//  var tbl = document.createElement("table");
-//  var tblBody = document.createElement("tbody");
-//
-//  // cells creation
-//  for (var j = 0; j <= 2; j++) {
-//    // table row creation
-//    var row = document.createElement("tr");
-//
-//    for (var i = 0; i <= 2; i++) {
-//      // create element <td> and text node 
-//      //Make text node the contents of <td> element
-//      // put <td> at end of the table row
-//      var cell = document.createElement("td");
-//      var cellText = document.createTextNode("cell is row " + j + ", column " + i);
-//
-//      cell.appendChild(cellText);
-//      row.appendChild(cell);
-//    }
-//
-//    //row added to end of table body
-//    tblBody.appendChild(row);
-//  }
-//
-//  // append the <tbody> inside the <table>
-//  tbl.appendChild(tblBody);
-//  // put <table> in the <body>
-//  body.appendChild(tbl);
-//  // tbl border attribute to 
-//  tbl.setAttribute("border", "2");
-      
+//      var tbl = document.getElementById('staff_tbl');
+////      var row = document.createElement("tr");
+//      _numRows = 5;
+//      var myRow = tbl.rows[1];
+//      
+//      for (var i = 0;i < _numRows; i++) {
+//        var cloneRow = myRow.cloneNode(true);
+//        cloneRow.cells[0].innerHTML = i + 2;
+//        console.dir(cloneRow);
+//        tbl.appendChild(cloneRow);
+//        
+//      }
+////      myRow.cells[1].bgColor = 'red';
+//        myRow.cells[1].innerHTML  = redBoss;
+
+
+      clearPersTable();
       console.log('Create table!');
     }
-    
+//------------------------------------------------------------------------------------------------------------------------------ 
+
+function clearPersTable() {
+
+  var tbl = document.getElementById('staff_tbl');
+  console.log(tbl);
+  for (var i = tbl.rows.length - 1; i>=2; i--) {
+          if(tbl.rows.length > 1) {
+            tbl.deleteRow(i);
+          }
+        }
+        
+  console.log(tbl);
+  
+}
     </script>
   </body>
 </html>

@@ -46,10 +46,16 @@ _event.endDate.setDate(_event.endDate.getDate() + 1);
   
   write_to_DB(_event, eventID);
   
-  createEventSpreadsheet(eventID);
+  var url = createEventSpreadsheet(eventID);
+  var monthIndex = _event.startDate.getMonth();
+  var sheets = ss_dtb.getSheets();
+  var shMonth = sheets[monthIndex + 2];
+  shMonth.getRange(shMonth.getLastRow(), 10).setValue(url);
+
+  
 }
 
-//========================================   function addPerson   =================================================================
+//========================================   function add New Person   =================================================================
 function addPerson(_pers) {
 
   shStaff.appendRow([_pers.id, _pers.name]);
@@ -90,6 +96,8 @@ function createEventSpreadsheet(_event_ID) {
   sh.getRange('B1').setValue('staff_Name');
   sh.getRange('A1:B1').setBackgroundRGB(255, 229, 153);
   sh.getRange('A1:B1').setFontWeight("bold");
+  
+  return(event_ss_url);
     
   }
 
@@ -114,13 +122,33 @@ function addPersonToEventSheet(_eventIndex, _staffIndex) {
   sh.appendRow([record.staffID, record.staffName]);
   
   var numReg = shEvent.getRange(_eventIndex + 1, 8).getValue();
+  var idEvent = shEvent.getRange(_eventIndex + 1, 1).getValue();
+//  Logger.log(idEvent);
   //numReg = parsInt(numReg);
   numReg++;
   Logger.log(numReg);
   shEvent.getRange(_eventIndex + 1, 8).setValue(numReg);
   
-//  Logger.log(idStaff);
   
+  
+//      Get month and id of event to add person  
+  var month = shEvent.getRange(_eventIndex + 1, 4).getValue().getMonth(); 
+//  Logger.log(month);
+  var numShMonth = month + 2;
+  
+  var sheets = ss_dtb.getSheets();
+//  Logger.log(sheets);
+  var shMonth = sheets[numShMonth];
+//  Logger.log(shMonth.getSheetName());
+  var idEventArray = shMonth.getRange(2, 1, shMonth.getLastRow()).getValues();
+  var array = idEventArray.map(function(r){return r[0];});
+  
+//  Logger.log(array);
+  var index = array.indexOf(idEvent);
+  
+  var numR = shMonth.getRange(index + 2, 8).getValue();
+  numR++;
+  shMonth.getRange(index + 2, 8).setValue(numR);
 }
  
 //========================================   function getListMonthEvents   ================================================================= 
@@ -138,25 +166,36 @@ function getListMonthEvents(_monthIndex) {
      var event = shMonth.getRange(i, 2).getValue();
      eventList.push(event);
    }
-   Logger.log(eventList);
+//   Logger.log(eventList);
   return(eventList);
  
 }
 //========================================   function getListMonthEvents   =================================================================
-function getNumStaff(_monthIndex, _eventIndex) {
+function getStaff(_monthIndex, _eventIndex) {
 
   var sheets = ss_dtb.getSheets();
   var shMonth = sheets[_monthIndex + 1];
   
   var eventStaff = [];
   
-  eventStaff[0] = shMonth.getRange(_eventIndex + 1, 6).getValue();
+  eventStaff[0] = shMonth.getRange(_eventIndex + 1, 6).getValue();  
   eventStaff[1] = shMonth.getRange(_eventIndex + 1, 8).getValue();
   eventStaff[2] = shMonth.getRange(_eventIndex + 1, 9).getValue();
+  eventStaff[3] = shMonth.getRange(_eventIndex + 1, 7).getValue();
   
-  var name = shMonth.getRange(_eventIndex + 1, 2).getValue();
-  Logger.log(name);
+  var eventUrl = shMonth.getRange(_eventIndex + 1, 10).getValue();
+  Logger.log(_eventIndex);
+  var ssEvent = SpreadsheetApp.openByUrl(eventUrl);
+  var sh = ssEvent.getSheetByName('Registered');
+  var st = [];
+  st = sh.getRange(2, 2, sh.getLastRow()).getValues();
+  var staffList = st.map(function(r){return r[0];});
   
-  Logger.log(eventStaff);
+  Logger.log(staffList);
+  
+  for (var i = 0; i < staffList.length; i++) {
+    eventStaff.push(staffList[i]);
+  }
+
   return(eventStaff);
 }
